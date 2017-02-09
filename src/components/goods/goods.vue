@@ -33,10 +33,12 @@
 				</li>
 			</ul>
 		</div>
+		<shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>	
 	</div>
 </template>
-<script type="text-ecmascript-6">
-	import BScroll from 'better-scroll'; 
+<script type="text/ecmascript-6">
+	import BScroll from 'better-scroll';
+	import shopcart from 'components/shopcart/shopcart';
 
 	const ERR_OK = 0;
 
@@ -51,15 +53,15 @@
 				goods: [],
 				listHeight: [],
 				scrollY: 0
-			}
+			};
 		},
 		computed: {
 			currentIndex () {
-				for (var i = 0; i <this.listHeight.length; i++) {
+				for (var i = 0; i < this.listHeight.length; i++) {
 					let height1 = this.listHeight[i];
-					let height2 = this.listHeight[i+1];
+					let height2 = this.listHeight[i + 1];
 					if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-						return i
+						return i;
 					}
 				}
 				return 0;
@@ -68,16 +70,16 @@
 		created () {
 			this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
 
-			this.$http.get('/api/goods').then ((response) => {
+			this.$http.get('/api/goods').then((response) => {
 				response = response.body;
 				if (response.errno === ERR_OK) {
 					this.goods = response.data;
 					this.$nextTick(() => {
 						this._initScroll();
 						this._calculateHeight();
-					})
+					});
 				}
-			})
+			});
 		},
 		methods: {
 			selectMenu (index, event) {
@@ -86,7 +88,7 @@
 				}
 				let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook');
 				let el = foodList[index];
-				this.foodScroll.scrollToElement(el,1000);
+				this.foodScroll.scrollToElement(el, 1000);
 			},
 			_initScroll () {
 				this.menuScroll = new BScroll(this.$els.menuWrapper, {
@@ -95,22 +97,25 @@
 
 				this.foodScroll = new BScroll(this.$els.foodsWrapper, {
 					probeType: 3
-				})
+				});
 
-				this.foodScroll.on('scroll',(pos)=>{
-					this.scrollY = Math.abs(Math.round(pos.y))
-				})
+				this.foodScroll.on('scroll', (pos) => {
+					this.scrollY = Math.abs(Math.round(pos.y));
+				});
 			},
 			_calculateHeight () {
 				let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook');
 				let height = 0;
 				this.listHeight.push(height);
-				for (var i = 0; i <foodList.length; i++) {
+				for (var i = 0; i < foodList.length; i++) {
 					let item = foodList[i];
 					height += item.clientHeight;
-					this.listHeight.push(height)
+					this.listHeight.push(height);
 				}
 			}
+		},
+		components: {
+			shopcart
 		}
 	};
 </script>
