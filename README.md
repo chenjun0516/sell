@@ -1,4 +1,5 @@
-# sell这是一个外卖app
+# sell
+
 > sell app
 
 ## Build Setup
