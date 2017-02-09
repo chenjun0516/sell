@@ -1,6 +1,6 @@
 # sell
 
-> sell app
+> sell app使用vue.js仿饿了么
 
 ## Build Setup
 
