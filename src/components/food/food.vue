@@ -69,7 +69,7 @@
 			return {
 				showFlag: false,
 				selectType: ALL,
-				onlyContent: true,
+				onlyContent: false,
 				desc: {
 					all: '全部',
 					positive: '推荐',
@@ -81,7 +81,7 @@
 			show () {
 				this.showFlag = true;
 				this.selectType = ALL;
-				this.onlyContent = true;
+				this.onlyContent = false;
 				this.$nextTick(() => {
 					if (!this.scroll) {
 						this.scroll = new BScroll(this.$els.food, {
